@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "17190691867",
+    "firebase_url": "https://itunesremake.firebaseio.com",
+    "project_id": "itunesremake",
+    "storage_bucket": "itunesremake.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17190691867:android:ec9dae3032bf2d34",
+        "android_client_info": {
+          "package_name": "com.example.itunesremake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17190691867-4p0ccr1sg2d6r6fccngs2eiofaaql0hb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.itunesremake",
+            "certificate_hash": "2312788ae1a5a7ff38bb859e7aa69b032c76d9b5"
+          }
+        },
+        {
+          "client_id": "17190691867-bd9ocds1s7u3n8e7d1ahdh0oth5gps3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuOf7AHDWLgGKftyL1Fv-DtYaHG1v4wXM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17190691867-bd9ocds1s7u3n8e7d1ahdh0oth5gps3g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
