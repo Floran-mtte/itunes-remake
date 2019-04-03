@@ -5,6 +5,8 @@ public class Track {
     private String collectionName;
     private String trackName;
     private String artworkUrl60;
+    private boolean favorite = false;
+    private String documentId;
 
     public Track(String artistName, String collectionName, String trackName, String artworkUrl60)
     {
@@ -12,7 +14,9 @@ public class Track {
         setCollectionName(collectionName);
         setTrackName(trackName);
         setArtworkUrl60(artworkUrl60);
+        setFavorite(false);
     }
+
 
     public String getArtistName() {
         return artistName;
@@ -45,4 +49,12 @@ public class Track {
     public void setArtworkUrl60(String artworkUrl60) {
         this.artworkUrl60 = artworkUrl60;
     }
+
+    public Boolean getFavorite() { return favorite; }
+
+    public void setFavorite(Boolean favorite) { this.favorite = favorite; }
+
+    public String getDocumentId() { return documentId; }
+
+    public void setDocumentId(String documentId) { this.documentId = documentId; }
 }

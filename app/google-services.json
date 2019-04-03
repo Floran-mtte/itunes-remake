@@ -21,10 +21,6 @@
             "package_name": "com.example.itunesremake",
             "certificate_hash": "2312788ae1a5a7ff38bb859e7aa69b032c76d9b5"
           }
-        },
-        {
-          "client_id": "17190691867-bd9ocds1s7u3n8e7d1ahdh0oth5gps3g.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
@@ -33,20 +29,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "17190691867-bd9ocds1s7u3n8e7d1ahdh0oth5gps3g.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
