@@ -3,6 +3,8 @@ package com.example.itunesremake;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -56,7 +58,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     public static final String URL = "https://itunes.apple.com/search?term=";
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
-    LinkedList<String> favorites = new LinkedList<String>();
+    private MediaPlayer mp;
+    LinkedList<Integer> favorites = new LinkedList<Integer>();
     LinkedList<String> documents = new LinkedList<String>();
     EditText search_input;
     Button search_button;
@@ -127,8 +130,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
                         for(int x = 0; x < favorites.size();x++)
                         {
-                            if(favorites.get(x).equals(track.getTrackName()))
+                            if(favorites.get(x) == track.getTrackId())
                             {
+                                Log.d(TAG,"test favorite search");
                                 track.setFavorite(true);
                                 track.setDocumentId(documents.get(x));
                             }
@@ -155,10 +159,29 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         requestQueue.add(jsonArrayRequest);
     }
 
-    private void showResults(ArrayList<Track> tracks)
+    private void showResults(final ArrayList<Track> tracks)
     {
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(tracks,getActivity().getApplicationContext());
         recycler.setAdapter(adapter);
+
+
+            adapter.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = recycler.indexOfChild(v);
+                if (mp != null && mp.isPlaying()) {
+                    mp.stop();
+
+                    Uri uri = Uri.parse(v.getTag(R.id.Preview).toString());
+                    mp = MediaPlayer.create(getContext(), uri);
+                    mp.start();
+                } else {
+                    Uri uri = Uri.parse(tracks.get(pos).getPreviewUrl());
+                    mp = MediaPlayer.create(getContext(), uri);
+                    mp.start();
+                }
+            }
+        });
         recycler.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
     }
 
@@ -172,7 +195,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     int i = 0;
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Map<String, Object> db_track = document.getData();
-                        favorites.add(i,db_track.get("trackName").toString());
+                        favorites.add(i,Integer.valueOf(db_track.get("trackId").toString()));
                         documents.add(i, document.getId());
                         i++;
                     }

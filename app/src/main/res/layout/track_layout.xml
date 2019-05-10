@@ -57,4 +57,14 @@
 
         />
 
+    <ImageButton
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/play"
+        android:background="@color/white"
+        android:layout_toRightOf="@+id/cover"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="20dp"/>
+
 </RelativeLayout>

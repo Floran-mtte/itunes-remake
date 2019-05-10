@@ -29,6 +29,7 @@ import java.util.concurrent.ExecutionException;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements View.OnClickListener {
 
     private static final String TAG = "RecycleViewAdapater";
+    private View.OnClickListener mClickListener;
     private ArrayList<Track> tracks = new ArrayList<>();
     private Context mContext;
     public static final int KEY_1 = 1;
@@ -45,6 +46,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.track_layout, parent, false);
         ViewHolder holder = new ViewHolder(view);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mClickListener.onClick(v);
+            }
+        });
+
+
         return holder;
     }
 
@@ -60,6 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.favorite.setTag(R.id.Track, tracks.get(i));
         holder.favorite.setTag(R.id.User, user);
+        holder.itemView.setTag(R.id.Preview, tracks.get(i).getPreviewUrl());
         holder.favorite.setOnClickListener(this);
 
         if(tracks.get(i).getFavorite())
@@ -83,13 +94,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 // Create a new user with a first and last name
                 Map<String, Object> track = new HashMap<>();
-                Track currentTrack = (Track) v.getTag(R.id.Track);
+                final Track currentTrack = (Track) v.getTag(R.id.Track);
+                Log.d(TAG, currentTrack.getFavorite().toString());
                 FirebaseUser user = (FirebaseUser) v.getTag(R.id.User);
-
+                track.put("trackId",currentTrack.getTrackId());
                 track.put("artistName",currentTrack.getArtistName());
                 track.put("trackName", currentTrack.getTrackName());
                 track.put("collectionName", currentTrack.getCollectionName());
                 track.put("artworkUrl60",currentTrack.getArtworkUrl60());
+                track.put("previewUrl",currentTrack.getPreviewUrl());
                 track.put("userId",user.getUid());
 
                 if(currentTrack.getFavorite())
@@ -106,7 +119,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     });
 
                     favBtn.setImageResource(R.drawable.favorite);
-
+                    currentTrack.setFavorite(false);
+                    favBtn.setTag(R.id.Track, currentTrack);
 
                 }
                 else
@@ -117,7 +131,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                 @Override
                                 public void onSuccess(DocumentReference documentReference) {
-                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                    currentTrack.setDocumentId(documentReference.getId());
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -127,6 +141,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 }
                             });
                     favBtn.setImageResource(R.drawable.favorite_pressed);
+
+                    currentTrack.setFavorite(true);
+                    favBtn.setTag(R.id.Track, currentTrack);
 
                 }
 
@@ -153,5 +170,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             layout = itemView.findViewById(R.id.parent_layout);
             favorite = itemView.findViewById(R.id.favorite);
         }
+    }
+
+    public void setClickListener(View.OnClickListener callback) {
+        mClickListener = callback;
     }
 }

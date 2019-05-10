@@ -1,20 +1,24 @@
 package com.example.itunesremake;
 
 public class Track {
+    private int trackId;
     private String artistName;
     private String collectionName;
     private String trackName;
     private String artworkUrl60;
     private boolean favorite = false;
     private String documentId;
+    private String previewUrl;
 
-    public Track(String artistName, String collectionName, String trackName, String artworkUrl60)
+    public Track(int id, String artistName, String collectionName, String trackName, String artworkUrl60, String previewUrl)
     {
+        setTrackId(id);
         setArtistName(artistName);
         setCollectionName(collectionName);
         setTrackName(trackName);
         setArtworkUrl60(artworkUrl60);
         setFavorite(false);
+        setPreviewUrl(previewUrl);
     }
 
 
@@ -57,4 +61,12 @@ public class Track {
     public String getDocumentId() { return documentId; }
 
     public void setDocumentId(String documentId) { this.documentId = documentId; }
+
+    public int getTrackId() { return trackId; }
+
+    public void setTrackId(int trackId) { this.trackId = trackId; }
+
+    public String getPreviewUrl() { return previewUrl; }
+
+    public void setPreviewUrl(String previewUrl) { this.previewUrl = previewUrl; }
 }
